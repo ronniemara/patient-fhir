@@ -80,7 +80,7 @@ for (let i = 0; i < handleNames.length; i++) {
 const ufile = 'Users.json';
 const tfile = 'Tweets.json';
 
-jsonfile.writeFileSync(ufile, udata, function(err) {
+jsonfile.writeFileSync(ufile, udata, null, function(err) {
   if (err) {
     console.error(err);
   } else {
@@ -88,7 +88,7 @@ jsonfile.writeFileSync(ufile, udata, function(err) {
   }
 });
 
-jsonfile.writeFileSync(tfile, tdata, function(err) {
+jsonfile.writeFileSync(tfile, tdata, null, function(err) {
   if (err) {
     console.error(err);
   } else {

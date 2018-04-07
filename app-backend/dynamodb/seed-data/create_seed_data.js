@@ -4,16 +4,47 @@ const jsonfile = require('jsonfile');
 const numUsers = 10;
 const tweetsPerUser = 5;
 const followersPerUser = 2;
+const numPatients = 50;
 
 const udata = [];
 const tdata = [];
 const handleNames = [];
+const patientData = [];
 
 faker.seed(1000);
 
 for (let i = 0; i < numUsers; i++) {
   const handle = faker.internet.userName();
   handleNames.push(handle);
+}
+
+for (let i = 0; i < numPatients; i++) {
+  // Since given is an array, lets put in some random middle names.
+  let given = [];
+  for (let n = 0; n < faker.random.number({ min: 1, max: 3 }); n++) {
+    given = given.concat(faker.name.firstName());
+  }
+
+  const family = faker.name.lastName();
+
+  // Just put a single prefix as faker only had Mr and Mrs.
+  const prefix = [faker.name.prefix()];
+
+  // Randomize suffix lengths as well for some variety
+  let suffix = [];
+  for (let n = 0; n < faker.random.number({ min: 0, max: 3 }); n++) {
+    suffix = suffix.concat(faker.name.suffix());
+  }
+
+  const patientInfo = {
+    resourceType: 'Patient',
+    given,
+    family,
+    prefix,
+    suffix,
+  };
+
+  patientData.push(patientInfo);
 }
 
 for (let i = 0; i < handleNames.length; i++) {
@@ -79,6 +110,7 @@ for (let i = 0; i < handleNames.length; i++) {
 
 const ufile = 'Users.json';
 const tfile = 'Tweets.json';
+const patientFile = 'Patients.json';
 
 jsonfile.writeFileSync(ufile, udata, null, function(err) {
   if (err) {
@@ -89,6 +121,14 @@ jsonfile.writeFileSync(ufile, udata, null, function(err) {
 });
 
 jsonfile.writeFileSync(tfile, tdata, null, function(err) {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log('data created successfully');
+  }
+});
+
+jsonfile.writeFileSync(patientFile, patientData, null, function(err) {
   if (err) {
     console.error(err);
   } else {

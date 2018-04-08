@@ -1,6 +1,4 @@
-type Mutation {
-
-}
+# type Mutation {}
 
 type Query {
 	getPatientInfo(given: String!, family: String): Patient!
@@ -10,10 +8,7 @@ type Query {
 	#searchAllMedsByKeyword(keyword: String!): MedsConnection
 }
 
-type Subscription {
-	
-}
-
+# type Subscription {}
 
 type Patient {
 	resourceType: String!

@@ -25,7 +25,7 @@ for (let i = 0; i < numPatients; i++) {
     suffix = suffix.concat(faker.name.suffix());
   }
 
-  //used to fetch from db
+  //used to fetch patient from db
   const identifier = faker.random.uuid();
 
   const patientInfo = {

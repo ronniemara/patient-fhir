@@ -50,33 +50,27 @@ const data = {
   },
   getPatients(args) {
     return promisify(callback =>
-      docClient.query(
+      docClient.scan(
         {
-          TableName: 'Users',
-          KeyConditionExpression: 'handle = :v1',
-          ExpressionAttributeValues: {
-            ':v1': args.handle,
-          },
+          TableName: 'Patients',
+          Limit: args.limit,
         },
         callback
       )
     ).then(result => {
-      let listOfPatients;
-
-      if (result.Items.length >= 1) {
-        listOfPatients = {
-          name: result.Items[0].name,
-          handle: result.Items[0].handle,
-          location: result.Items[0].location,
-          description: result.Items[0].description,
-          followers_count: result.Items[0].followers_count,
-          friends_count: result.Items[0].friends_count,
-          favourites_count: result.Items[0].favourites_count,
-          following: result.Items[0].following,
-        };
+      console.log(result);
+      for (let i = 0; i < result.Items.length; i += 1) {
+        const patients = [];
+        patients.push({
+          resourceType: 'Patient',
+          given: result.Items[i].given,
+          family: result.Items[i].family,
+          prefix: result.Items[i].prefix,
+          suffix: result.Items[i].suffix,
+          identifier: result.Items[i].identifier,
+        });
       }
-
-      return listOfTweets;
+      return patients;
     });
   },
 };
